@@ -2,65 +2,55 @@
 
 import { motion } from "framer-motion";
 
-/**
- * A single continuous flowing path stream that runs the full height of the page.
- * Paths are tall SVG curves — not section-bound — so they scroll through everything.
- */
-function FlowingStream({ offset }: { offset: number }) {
-  // 28 curves per stream, each slightly offset horizontally and vertically
-  const paths = Array.from({ length: 28 }, (_, i) => {
-    const xBase = 50 + offset + i * 14;
-    const amplitude = 120 + i * 18;
-    const shift = offset * 0.6;
-
-    return {
-      id: i,
-      // Tall bezier that spans the full height (0 to 4000 in viewBox units)
-      d: `M${xBase + shift} 0
-          C${xBase + amplitude + shift} 600,
-           ${xBase - amplitude + shift} 1200,
-           ${xBase + amplitude * 0.6 + shift} 2000
-          C${xBase - amplitude * 0.8 + shift} 2800,
-           ${xBase + amplitude + shift} 3400,
-           ${xBase - amplitude * 0.4 + shift} 4000`,
-      opacity: 0.035 + i * 0.006,
-      width: 0.6 + i * 0.04,
-      duration: 18 + i * 1.2,
-    };
-  });
+function FloatingPaths({ position }: { position: number }) {
+  const paths = Array.from({ length: 36 }, (_, i) => ({
+    id: i,
+    d: `M-${380 - i * 5 * position} -${189 + i * 6}C-${
+      380 - i * 5 * position
+    } -${189 + i * 6} -${312 - i * 5 * position} ${216 - i * 6} ${
+      152 - i * 5 * position
+    } ${343 - i * 6}C${616 - i * 5 * position} ${470 - i * 6} ${
+      684 - i * 5 * position
+    } ${875 - i * 6} ${684 - i * 5 * position} ${875 - i * 6}`,
+    width: 0.5 + i * 0.03,
+  }));
 
   return (
-    <>
-      {paths.map((p) => (
-        <motion.path
-          key={p.id}
-          d={p.d}
-          stroke="#C9A87C"
-          strokeWidth={p.width}
-          strokeOpacity={p.opacity}
-          fill="none"
-          initial={{ pathLength: 0, opacity: 0 }}
-          animate={{
-            pathLength: [0.4, 1, 0.4],
-            opacity: [p.opacity * 0.5, p.opacity, p.opacity * 0.5],
-            pathOffset: [0, 1, 0],
-          }}
-          transition={{
-            duration: p.duration,
-            repeat: Infinity,
-            ease: "linear",
-            delay: p.id * 0.3,
-          }}
-        />
-      ))}
-    </>
+    <div className="absolute inset-0 pointer-events-none">
+      <svg
+        className="w-full h-full"
+        viewBox="0 0 696 316"
+        fill="none"
+        preserveAspectRatio="xMidYMid slice"
+        aria-hidden
+      >
+        {paths.map((path) => (
+          <motion.path
+            key={path.id}
+            d={path.d}
+            stroke="#C9A87C"
+            strokeWidth={path.width}
+            strokeOpacity={0.04 + path.id * 0.008}
+            initial={{ pathLength: 0.3, opacity: 0.4 }}
+            animate={{
+              pathLength: 1,
+              opacity: [0.2, 0.5, 0.2],
+              pathOffset: [0, 1, 0],
+            }}
+            transition={{
+              duration: 20 + Math.random() * 10,
+              repeat: Number.POSITIVE_INFINITY,
+              ease: "linear",
+            }}
+          />
+        ))}
+      </svg>
+    </div>
   );
 }
 
 /**
- * Renders the full-page continuous path background.
- * Place this as `position: fixed` so it covers the entire viewport while scrolling,
- * giving the illusion the streams flow through every section.
+ * Fixed full-page background — covers every section as the user scrolls.
  */
 export function BackgroundPaths() {
   return (
@@ -68,42 +58,8 @@ export function BackgroundPaths() {
       aria-hidden
       className="pointer-events-none fixed inset-0 z-0 overflow-hidden"
     >
-      <svg
-        className="w-full h-full"
-        viewBox="0 0 800 4000"
-        preserveAspectRatio="xMidYMid slice"
-        fill="none"
-      >
-        {/* Left stream */}
-        <FlowingStream offset={-320} />
-        {/* Right stream (mirrored by positive offset) */}
-        <FlowingStream offset={320} />
-        {/* Centre accent — fewer, broader curves */}
-        {Array.from({ length: 8 }, (_, i) => {
-          const x = 380 + (i - 4) * 22;
-          return (
-            <motion.path
-              key={`c-${i}`}
-              d={`M${x} 0 C${x + 200} 800, ${x - 200} 1600, ${x + 100} 2400 C${x - 180} 3200, ${x + 220} 3700, ${x} 4000`}
-              stroke="#2B4A8F"
-              strokeWidth={0.5 + i * 0.05}
-              strokeOpacity={0.025 + i * 0.004}
-              fill="none"
-              initial={{ pathLength: 0.3 }}
-              animate={{
-                pathOffset: [0, 1, 0],
-                opacity: [0.2, 0.5, 0.2],
-              }}
-              transition={{
-                duration: 28 + i * 2,
-                repeat: Infinity,
-                ease: "linear",
-                delay: i * 0.8,
-              }}
-            />
-          );
-        })}
-      </svg>
+      <FloatingPaths position={1} />
+      <FloatingPaths position={-1} />
     </div>
   );
 }
