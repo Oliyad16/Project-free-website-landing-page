@@ -3,6 +3,7 @@ import { ApplicationModal } from "@/components/application/ApplicationModal";
 import { LandingExperienceTracker } from "@/components/shared/LandingExperienceTracker";
 import { StickyMobileCta } from "@/components/shared/StickyMobileCta";
 import { AnimatedSection } from "@/components/shared/AnimatedSection";
+import { BackgroundPaths } from "@/components/ui/background-paths";
 
 import { HeroSection } from "@/components/landing/HeroSection";
 import { SocialProofSection } from "@/components/landing/SocialProofSection";
@@ -17,6 +18,9 @@ import { FinalCtaSection } from "@/components/landing/FinalCtaSection";
 export default function LandingPage() {
   return (
     <ApplicationProvider>
+      {/* Full-page continuous animated paths — fixed behind all sections */}
+      <BackgroundPaths />
+
       {/* Analytics tracker (client, renders nothing) */}
       <LandingExperienceTracker />
 
@@ -26,7 +30,7 @@ export default function LandingPage() {
       {/* Sticky mobile CTA */}
       <StickyMobileCta />
 
-      <main className="flex flex-col min-h-screen pb-20 md:pb-0">
+      <main className="relative z-10 flex flex-col min-h-screen pb-20 md:pb-0">
         {/* Hero — no animation wrapper, loads immediately */}
         <HeroSection />
 
@@ -78,7 +82,7 @@ export default function LandingPage() {
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-[rgba(201,168,124,0.08)] py-10 px-6 text-center">
+      <footer className="relative z-10 border-t border-[rgba(201,168,124,0.08)] py-10 px-6 text-center">
         <p className="text-[#9A8B7A] text-sm">
           © {new Date().getFullYear()} Living Stone Solutions. All rights reserved.
         </p>

@@ -1,7 +1,7 @@
 import { ApplicationModalTrigger } from "@/components/application/ApplicationModal";
 import { SectionLabel } from "@/components/shared/SectionLabel";
-import { BackgroundPaths } from "@/components/ui/background-paths";
 import { Shield, Zap, Users, Award } from "lucide-react";
+import Image from "next/image";
 
 const TRUST_SIGNALS = [
   { icon: Shield, text: "Human-supervised builds" },
@@ -16,20 +16,31 @@ export function HeroSection() {
       id="hero"
       className="relative min-h-screen flex flex-col items-center justify-center px-6 pt-32 pb-24 overflow-hidden"
     >
-      {/* Animated background paths */}
-      <BackgroundPaths />
-
-      {/* Soft radial glow behind content */}
+      {/* Subtle radial glow behind content — sits above fixed bg paths */}
       <div
         aria-hidden
-        className="pointer-events-none absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] rounded-full animate-glow-pulse"
+        className="pointer-events-none absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] rounded-full animate-glow-pulse z-0"
         style={{
-          background: "radial-gradient(ellipse, rgba(201,168,124,0.08) 0%, transparent 70%)",
+          background:
+            "radial-gradient(ellipse, rgba(201,168,124,0.07) 0%, transparent 70%)",
         }}
       />
 
       <div className="relative z-10 max-w-4xl mx-auto text-center flex flex-col items-center gap-8">
-        {/* Logo */}
+
+        {/* Logo — dark circle background so the badge reads cleanly */}
+        <div className="relative size-28 rounded-full bg-[#0a0b10] ring-1 ring-[rgba(201,168,124,0.2)] shadow-[0_0_32px_rgba(201,168,124,0.12)] flex items-center justify-center overflow-hidden">
+          <Image
+            src="/logo/logo.png"
+            alt="Living Stone Solutions"
+            width={112}
+            height={112}
+            className="object-contain scale-[0.88]"
+            priority
+          />
+        </div>
+
+        {/* Eyebrow */}
         <SectionLabel>Living Stone Solutions</SectionLabel>
 
         {/* Headline */}
