@@ -1,5 +1,6 @@
 import { ApplicationModalTrigger } from "@/components/application/ApplicationModal";
 import { SectionLabel } from "@/components/shared/SectionLabel";
+import { HeroCarousel } from "@/components/landing/HeroCarousel";
 import { Shield, Zap, Users, Award } from "lucide-react";
 import Image from "next/image";
 
@@ -16,7 +17,7 @@ export function HeroSection() {
       id="hero"
       className="relative min-h-screen flex flex-col items-center justify-center px-6 pt-32 pb-24 overflow-hidden"
     >
-      {/* Subtle radial glow behind content — sits above fixed bg paths */}
+      {/* Subtle radial glow */}
       <div
         aria-hidden
         className="pointer-events-none absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] rounded-full animate-glow-pulse z-0"
@@ -28,7 +29,7 @@ export function HeroSection() {
 
       <div className="relative z-10 max-w-4xl mx-auto text-center flex flex-col items-center gap-8">
 
-        {/* Logo — dark circle background so the badge reads cleanly */}
+        {/* Logo */}
         <div className="relative size-28 rounded-full bg-[#0a0b10] ring-1 ring-[rgba(201,168,124,0.2)] shadow-[0_0_32px_rgba(201,168,124,0.12)] flex items-center justify-center overflow-hidden">
           <Image
             src="/logo/logo.png"
@@ -91,36 +92,14 @@ export function HeroSection() {
           ))}
         </div>
 
-        {/* Floating browser mockup */}
-        <div className="mt-12 w-full max-w-2xl animate-float-slow">
-          <div className="rounded-2xl border border-[rgba(201,168,124,0.15)] bg-[#111520] shadow-2xl overflow-hidden">
-            {/* Browser chrome */}
-            <div className="flex items-center gap-2 px-4 py-3 border-b border-[rgba(201,168,124,0.1)] bg-[#0e1219]">
-              <span className="size-3 rounded-full bg-[#e05252] opacity-60" />
-              <span className="size-3 rounded-full bg-[#C9A87C] opacity-60" />
-              <span className="size-3 rounded-full bg-[#4A6DB5] opacity-60" />
-              <div className="flex-1 mx-4 h-6 rounded-md bg-[rgba(201,168,124,0.06)] border border-[rgba(201,168,124,0.1)] flex items-center px-3">
-                <span className="text-[10px] text-[#9A8B7A] font-mono">yourbusiness.com</span>
-              </div>
-            </div>
-            {/* Fake page content */}
-            <div className="p-6 space-y-4">
-              <div className="h-8 w-2/3 rounded-lg bg-[rgba(201,168,124,0.08)]" />
-              <div className="h-3 w-full rounded bg-[rgba(255,255,255,0.04)]" />
-              <div className="h-3 w-5/6 rounded bg-[rgba(255,255,255,0.04)]" />
-              <div className="h-3 w-3/4 rounded bg-[rgba(255,255,255,0.04)]" />
-              <div className="flex gap-3 mt-6">
-                <div className="h-10 w-36 rounded-xl bg-[rgba(201,168,124,0.2)]" />
-                <div className="h-10 w-28 rounded-xl bg-[rgba(43,74,143,0.15)] border border-[rgba(74,109,181,0.2)]" />
-              </div>
-              <div className="grid grid-cols-3 gap-3 mt-4">
-                {[1, 2, 3].map((i) => (
-                  <div key={i} className="h-24 rounded-xl bg-[rgba(255,255,255,0.03)] border border-[rgba(201,168,124,0.07)]" />
-                ))}
-              </div>
-            </div>
-          </div>
+        {/* Website portfolio carousel */}
+        <div className="mt-12 w-full max-w-2xl">
+          <p className="text-[#9A8B7A] text-xs uppercase tracking-widest mb-5 text-center">
+            Examples of what we build
+          </p>
+          <HeroCarousel />
         </div>
+
       </div>
     </section>
   );

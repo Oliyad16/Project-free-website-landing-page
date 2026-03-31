@@ -85,6 +85,11 @@
   50%       { opacity: 0.30; }
 }
 
+@keyframes autoplay-progress {
+  0%   { transform: translate3d(-100%, 0, 0); }
+  100% { transform: translate3d(0%, 0, 0);   }
+}
+
 /* ── Utilities ── */
 @layer utilities {
   .animate-rise-fade  { animation: rise-fade  0.8s ease-out both; }
