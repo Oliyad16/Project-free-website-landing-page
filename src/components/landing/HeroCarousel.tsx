@@ -3,31 +3,28 @@
 import Image from "next/image";
 import { Carousel } from "@/components/ui/carousel";
 
+function screenshotUrl(site: string) {
+  return `https://api.microlink.io/?url=${encodeURIComponent(site)}&screenshot=true&meta=false&embed=screenshot.url`;
+}
+
 const PORTFOLIO_SLIDES = [
   {
-    src: "https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=800&q=80",
-    alt: "Modern restaurant website",
-    label: "Restaurant & Dining",
+    src: screenshotUrl("https://solution.thelivingstonefoundation.com/"),
+    alt: "Livingstone Foundation Solutions website",
+    label: "Foundation Solutions",
+    url: "solution.thelivingstonefoundation.com",
   },
   {
-    src: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80",
-    alt: "Professional services website",
-    label: "Professional Services",
+    src: screenshotUrl("https://geoagency.thelivingstonefoundation.com/"),
+    alt: "Geo Agency website",
+    label: "Geo Agency",
+    url: "geoagency.thelivingstonefoundation.com",
   },
   {
-    src: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80",
-    alt: "Local business website",
-    label: "Local Business",
-  },
-  {
-    src: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&q=80",
-    alt: "Retail shop website",
-    label: "Retail & E-commerce",
-  },
-  {
-    src: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=800&q=80",
-    alt: "Consulting firm website",
-    label: "Consulting & Coaching",
+    src: screenshotUrl("https://ozarkbincleaningvalet.com/"),
+    alt: "Ozark Bin Cleaning Valet website",
+    label: "Ozark Bin Cleaning",
+    url: "ozarkbincleaningvalet.com",
   },
 ];
 
@@ -35,10 +32,12 @@ function SlideCard({
   src,
   alt,
   label,
+  url,
 }: {
   src: string;
   alt: string;
   label: string;
+  url: string;
 }) {
   return (
     <div className="relative rounded-2xl overflow-hidden border border-[rgba(201,168,124,0.18)] bg-[#111520] shadow-[0_4px_32px_rgba(0,0,0,0.5)] group">
@@ -47,7 +46,9 @@ function SlideCard({
         <span className="size-2.5 rounded-full bg-[rgba(201,168,124,0.25)]" />
         <span className="size-2.5 rounded-full bg-[rgba(201,168,124,0.15)]" />
         <span className="size-2.5 rounded-full bg-[rgba(201,168,124,0.1)]" />
-        <div className="ml-3 flex-1 h-5 rounded-md bg-[rgba(201,168,124,0.06)] border border-[rgba(201,168,124,0.08)]" />
+        <div className="ml-3 flex-1 h-5 rounded-md bg-[rgba(201,168,124,0.06)] border border-[rgba(201,168,124,0.08)] flex items-center px-2">
+          <span className="text-[10px] text-[rgba(201,168,124,0.4)] truncate">{url}</span>
+        </div>
       </div>
 
       {/* Screenshot */}
@@ -75,7 +76,7 @@ function SlideCard({
 
 export function HeroCarousel() {
   const slides = PORTFOLIO_SLIDES.map((slide) => (
-    <SlideCard key={slide.src} {...slide} />
+    <SlideCard key={slide.url} {...slide} />
   ));
 
   return (
